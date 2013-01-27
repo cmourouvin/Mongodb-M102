@@ -13,8 +13,8 @@ Run a script file
 _________________
 
 1 - Run a mongo server (mongod)
-2 - Execute the script : mongo localhost:27017 myscript.js
+2 - Execute the script : mongo localhost:27017/database myscript.js
 
-E.g : mongo localhost:27017 script_mongo_jeuessaie_phones.js
+E.g : mongo localhost:27017/week1 script_mongo_jeuessaie_phones.js
 
 Assuming  you have the file where you run the command
