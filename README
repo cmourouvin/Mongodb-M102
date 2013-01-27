@@ -1,0 +1,20 @@
+# Date : JAN 2013
+# Misc files about the M102 10gen Course
+#
+# Link : https://education.10gen.com
+
+#---------------------------------------
+# Week 1 : Discovering MongoDB Basics
+#---------------------------------------
+
+- A script file to create a practice collection : script_mongo_jeuessaie_phones.js
+
+Run a script file
+_________________
+
+1 - Run a mongo server (mongod)
+2 - Execute the script : mongo localhost:27017 myscript.js
+
+E.g : mongo localhost:27017 script_mongo_jeuessaie_phones.js
+
+Assuming  you have the file where you run the command
