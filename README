@@ -17,4 +17,32 @@ _________________
 
 E.g : mongo localhost:27017/week1 script_mongo_jeuessaie_phones.js
 
-Assuming  you have the file where you run the command
+Assuming  you have the file where you run the command.
+
+
+Structure de document "phone" :
+-------------------------------------------------------------------------
+{
+	"_id" : ObjectId("510563eecf40816f5d969a3b"),
+	"phoneName" : "Xperia10",
+	"code" : "236l37",
+	"os" : "Windows Mobile",
+	"release" : ISODate("1970-01-01T00:00:00Z"),
+	"specs" : {
+		"screen" : 3,
+		"colors" : [
+			"black",
+			"white"
+		],
+		"type" : "Smartphone",
+		"resolutionHD" : false,
+		"hdd" : "8GB",
+		"ram" : "1024MB",
+		"misc" : {
+			"countSell" : null,
+			"price" : 954,
+			"devise" : "€"
+		}
+	}
+}
+-------------------------------------------------------------------------
