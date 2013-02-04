@@ -1,7 +1,6 @@
 /* Insertion  d'un jeu de données de nbDocument documents dans collection phones */
 
-var nbDocument = 10000;
-print("Nombre de phones rajouté : " + nbDocument);
+var nbDocument = 10;
 
 products = ["Iphone5", "Iphone4S", "GalaxyS2", "HTC Desire", "Nexus4", "Xperia10", "Galaxy Tab 2", "Asus X3", "Nokia Lumia8", "BlackBerry 10", "GalaxyS3"]
 taille_ecran = [ 3, 3.7, 4, 4.7, 5.2, 10.1, 9, 7 ]
@@ -36,6 +35,6 @@ function getDevise() { return devises[Math.floor((Math.random()*100)%devises.len
 
 /* Boubcle principale  après RAZ de la collection phones */
 
-db.phones.drop()
-for ( var i=0; i<nbDocument ;i++) { var sc = getScreen(); db.phones.insert({phoneName : getRandProduct(), code : getCode(), os : getOs(this.phoneName), release: new Date(getDate()), specs : { screen : sc,colors : getColors(),  type : getType(sc), resolutionHD: hdRandom(), hdd : getHdd(), ram: getRam(), misc : {countSell : null, price : getPrice(), devise : getDevise() } } });}
+db.test.drop();
+for ( var i=0; i<nbDocument ;i++) { var sc = getScreen(); db.test.insert({phoneName : getRandProduct(), code : getCode(), os : getOs(this.phoneName), release: new Date(getDate()), specs : { screen : sc,colors : getColors(),  type : getType(sc), resolutionHD: hdRandom(), hdd : getHdd(), ram: getRam(), misc : {countSell : null, price : getPrice(), devise : getDevise() } } });}
 

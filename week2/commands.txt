@@ -1,0 +1,43 @@
+---- 2.2
+
+var prod1 = db.products.findOne({_id:ObjectId("507d95d5719dbef170f15c00")})
+
+prod1.term_years = 3
+
+db.products.update({_id:prod1._id},prod1)
+
+prod1.limits.sms.over_rate = 0.01
+
+db.products.update({_id:prod1._id},prod1)
+
+> homework.b()
+0.050.019031
+
+
+---- 2.3
+
+> db.products.find({"limits.voice":{$exists:1}}).count()
+
+3
+
+---- 2.4
+
+> db.products.ensureIndex({for:1})
+
+Q1 : 4
+Q2 : 4
+Q3 : YES
+
+---- 2.5
+
+// Trouver les items et boucler dessus
+> db.products.find({for:{$exists:1},for:"ac3"}).forEach( function(item) { printjson(item) } )
+
+// Réaliser l'update
+> db.products.find({for:{$exists:1},for:"ac3"}).forEach( function(item) { db.products.update({_id:item._id},{$inc:{price:2}}) } )
+
+> homework.c()
+89.5954.5
+
+
+
