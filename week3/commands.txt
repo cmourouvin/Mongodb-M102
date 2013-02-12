@@ -1,0 +1,40 @@
+---- 3.1
+
+// Faire un "group by" sur le champs "state" et un "sum" du nombre de zip code
+
+> db.zips.aggregate( { $group : { _id : "$state", countZips : { $sum : 1 } }}, { $sort: {countZips:-1}}, {$limit:4} );
+
+{
+	"result" : [
+		{
+			"_id" : "TX",
+			"countZips" : 1676
+		},
+		{
+			"_id" : "NY",
+			"countZips" : 1596
+		},
+		{
+			"_id" : "CA",
+			"countZips" : 1523
+		},
+		{
+			"_id" : "PA",
+			"countZips" : 1458
+		}
+	],
+	"ok" : 1
+}
+
+Résultat : 1458
+
+---- 3.2
+
+// Etape 1 : selectionner les bonnes données avec le $match
+
+> db.zips.aggregate(   [     { $project : { _id : { $substr : ["$city",0,1] } } } ,      { $group : { _id : "$_id", n : {$sum:1} } },{$match : {_id:{$gte :"0"}, _id:{$lte : "9"} } }, {$sort: {_id:1}}   ] )
+
+// Etape 2 : appliquer le findAndModify avec un $remove
+
+
+
