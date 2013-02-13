@@ -34,7 +34,69 @@ Résultat : 1458
 
 > db.zips.aggregate(   [     { $project : { _id : { $substr : ["$city",0,1] } } } ,      { $group : { _id : "$_id", n : {$sum:1} } },{$match : {_id:{$gte :"0"}, _id:{$lte : "9"} } }, {$sort: {_id:1}}   ] )
 
-// Etape 2 : appliquer le findAndModify avec un $remove
+// Etape 2 : remove les bruits dans les données (city avec des chiffres)
+> db.zips.remove({city: /^[0-9]/})
+> db.zips.count()
+29353
+
+---- 3.3
+
+// ElementMatch matter
+
+> db.policies.find( { status : { $ne : "expired" }, coverages : { $elemMatch : { type : "liability", rates : { $elemMatch : { rate : { $gte : 100 }, current : true } } } } } )
+
+---- 3.4
+
+// Tous les zip de l'état PA 
+
+> db.zips.find({state: /^PA$/i},{state:1}).pretty()
+
+
+// Faire le reduce
+
+r = function( key , values ){
+
+    var total = 0;
+    for ( var i=0; i<values.length; i++ )
+        total += parseInt(values[i]);
+
+    return { count : total };
+};
+
+// Bad resultat 
+
+> db.zips.mapReduce(map_closest, r, {out :{inline:1}, query : {state : /^PA$/i}})
+{
+	"results" : [
+		{
+			"_id" : "phil",
+			"value" : {
+				"count" : "0[object bson_object]1111111111111111111111111111111111111111111111111111111111"
+			}
+		},
+		{
+			"_id" : "pitt",
+			"value" : {
+				"count" : "0[object bson_object]111111"
+			}
+		}
+	],
+	"timeMillis" : 127,
+	"counts" : {
+		"input" : 1458,
+		"emit" : 1458,
+		"reduce" : 19,
+		"output" : 2
+	},
+	"ok" : 1,
+}
+
+
+
+
+
+
+
 
 
 
