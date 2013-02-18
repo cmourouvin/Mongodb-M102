@@ -51,37 +51,60 @@ Résultat : 1458
 
 > db.zips.find({state: /^PA$/i},{state:1}).pretty()
 
+// Map (donné dans week3.js)
+
+> map_closest
+function map_closest() {
+    var pitt = [-80.064879, 40.612044];
+    var phil = [-74.978052, 40.089738];
+
+    function distance(a, b) {
+        var dx = a[0] - b[0];
+        var dy = a[1] - b[1];
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    if (distance(this.loc, pitt) < distance(this.loc, phil)) {
+        emit("pitt", 1);
+    } else {
+        emit("phil", 1);
+    }
+}
+
 
 // Faire le reduce
 
 r = function( key , values ){
 
-    var total = 0;
-    for ( var i=0; i<values.length; i++ )
-        total += parseInt(values[i]);
 
+    var total = 0;
+    for ( var i=0; i<values.length; i++ ) {
+        total += parseInt(values[i]);
+	print("Total : "+total);
+    }
     return { count : total };
 };
 
 // Bad resultat 
 
 > db.zips.mapReduce(map_closest, r, {out :{inline:1}, query : {state : /^PA$/i}})
+
 {
 	"results" : [
 		{
 			"_id" : "phil",
 			"value" : {
-				"count" : "0[object bson_object]1111111111111111111111111111111111111111111111111111111111"
+				"count" : 732
 			}
 		},
 		{
 			"_id" : "pitt",
 			"value" : {
-				"count" : "0[object bson_object]111111"
+				"count" : 726
 			}
 		}
 	],
-	"timeMillis" : 127,
+	"timeMillis" : 142,
 	"counts" : {
 		"input" : 1458,
 		"emit" : 1458,
@@ -91,9 +114,7 @@ r = function( key , values ){
 	"ok" : 1,
 }
 
-
-
-
+Résultat : 732
 
 
 
