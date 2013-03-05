@@ -1,0 +1,38 @@
+---- 6.1
+
+-- Stats sur la collections initiale 
+
+mongos> db.trades.stats()
+{
+	"sharded" : false,
+	"primary" : "shard0000",
+	"ns" : "week6.trades",
+	"count" : 1000001,
+	"size" : 244000240,
+	"avgObjSize" : 243.999996000004,
+	"storageSize" : 315006976,
+	"numExtents" : 15,
+	"nindexes" : 1,
+	"lastExtentSize" : 84426752,
+	"paddingFactor" : 1,
+	"systemFlags" : 1,
+	"userFlags" : 0,
+	"totalIndexSize" : 32458720,
+	"indexSizes" : {
+		"_id_" : 32458720
+	},
+	"ok" : 1
+}
+
+-- On retrouve le même nombre de document dans le shard car il est unique
+mongos> homework.a()
+1000001
+
+---- 6.2
+
+> 3
+
+---- 6.3
+
+> 2 (shards bien présents)
+
