@@ -1,0 +1,14 @@
+-- Security 
+
+> Pour le client : 
+
+1 : --auth en lançant le mongod
+2 : définir les user "addUser" et leur droit read/write
+3 : 
+
+> Entre les "Set" (entre cluster)
+
+Placer un --keyFile lors du lancement du mongod
+
+
+

@@ -1,0 +1,117 @@
+-- Final 
+
+Final 1
+-------
+
+>9
+
+Final 2
+-------
+
+Réponse 2
+
+
+Final 3
+-------
+
+3 documents
+
+>  bsondump test.foo.2013-03-11T10-25-48.0.bson 
+{ "_id" : 7 }
+{ "_id" : 8 }
+{ "_id" : 9 }
+3 objects found
+
+
+Final 4
+--------
+
+> 233
+
+Final 5
+-------
+
+1 et 3
+
+Todo : voir pk ça ne marche pas pour l'index
+
+Final 6
+-------
+
+2 et 3
+
+Final 7
+-------
+
+
+Final 8
+-------
+> configsvr> db.chunks.find().sort({_id:1}).next().lastmodEpoch.getTimestamp().toString().substr(19,5)
+> 07:07
+
+
+Final 9
+-------
+mongorestore --oplogReplay s1 --host SPHINX --port 27017
+mongorestore --oplogReplay s2 --host SPHINX --port 27017
+
+-- Update shards
+>db.shards.update({"_id":"s1"},{$set : {"host":"localhost:27501"}})
+>db.shards.update({"_id":"s2"},{$set : {"host":"localhost:27601"}})
+configsvr> db.shards.find()
+{ "_id" : "s1", "host" : "localhost:27501" }
+{ "_id" : "s2", "host" : "localhost:27601" }
+
+
+-- Run des deux shards
+-- FAUX mongod --shardsvr --port 27501 --fork --logpath s1.log --replSet s1
+-- FAUX mongod --shardsvr --port 27601 --fork --logpath s2.log --replSet s2
+-- Pas de RS à préciser
+
+>mongod --shardsvr --port 27501 --fork --logpath s1.log
+> (remove /data/db/mongo.lock si besoin)
+>mongod --shardsvr --port 27601 --fork --logpath s2.log
+
+mongos> use snps
+switched to db snps
+mongos> db.elegans.aggregate([{$match:{N2:"T"}},{$group:{_id:"$N2",n:{$sum:1}}}]).result[0].n
+47664
+
+Final 10
+--------
+mongos> db.elegans.ensureIndex({"N2":1,"mutant":1})
+removed == 1 + _files.size()
+mongos> 
+Réponse 3 et 7
+
+Final 11
+--------
+
+1)
+mongos> db.problem11.aggregate({$group : {_id:{n2 : "$N2" , mutant : "$mutant"}, count : {$sum:1}}})
+
+2)
+Pour le résultat final (count du champs "result" (array) : 
+
+mongos> db.problem11.aggregate({$group : {_id:{n2 : "$N2" , mutant : "$mutant"}, count : {$sum:1}}}).result.length
+31
+
+On peut vérifier en testant les valeurs de la 1) : 
+
+mongos> db.problem11.find({"N2":"a","mutant":"c"}).count()
+> 21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
